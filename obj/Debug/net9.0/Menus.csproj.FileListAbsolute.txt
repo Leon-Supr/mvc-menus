@@ -95,3 +95,4 @@
 /home/leonjaro/Escritorio/Menus/obj/Debug/net9.0/Menus.pdb
 /home/leonjaro/Escritorio/Menus/obj/Debug/net9.0/Menus.genruntimeconfig.cache
 /home/leonjaro/Escritorio/Menus/obj/Debug/net9.0/ref/Menus.dll
+/home/leonjaro/Escritorio/Menus/obj/Debug/net9.0/Menus.sourcelink.json
