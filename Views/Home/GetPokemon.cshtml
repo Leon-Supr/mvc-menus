@@ -1,8 +1,15 @@
 @using menus.Models
 @model Pokemon
 
-<h2>@Model.Name</h2>
-<img src="@Model.ImageUrl" alt="@Model.Name" />
-<p><strong>Tipos:</strong> @string.Join(", ", Model.Types)</p>
-<p><strong>Abilidades:</strong> @string.Join(", ", Model.Abilities)</p>
-<p><strong>Weight:</strong> @Model.Weight</p>
+<div class="d-flex justify-content-center align-items-center">
+    <div class="card" style="width: 18rem;">
+        <img src="@Model.ImageUrl" alt="@Model.Name" class="card-img-top">
+        <div class="card-body">
+            <b>
+                <h5 class="card-title">@Model.Name</h5>
+            </b>
+            <p><strong>Tipos:</strong> @string.Join(", ", Model.Types)</p>
+            <p><strong>Abilidades:</strong> @string.Join(", ", Model.Abilities)</p>
+        </div>
+    </div>
+</div>
