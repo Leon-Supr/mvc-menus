@@ -47,6 +47,30 @@ public class HomeController : Controller
 
         return View(pokemon);
     }
+
+    [HttpGet("Home/GetJoke/{lang}")]
+    public async Task<IActionResult> GetJoke(string lang)
+    {
+        String url = $"https://v2.jokeapi.dev/joke/Programming?lang={lang}&type=single";
+        HttpResponseMessage response =
+             await httpClient.GetAsync(url);
+        if (!response.IsSuccessStatusCode)
+        {
+            return NotFound();
+        }
+        String json = await response
+                           .Content
+                           .ReadAsStringAsync();
+        JsonDocument doc = JsonDocument
+                          .Parse(json);
+        Joke joke = new Joke
+        {
+            joke = doc.RootElement.GetProperty("joke").GetString()
+        };
+
+        return View(joke);
+    }
+
     private readonly HttpClient httpClient;
 
     public HomeController(HttpClient httpClient)

@@ -1,0 +1,33 @@
+@using menus.Models
+@model Joke
+
+@{
+    var language = Context.Request.RouteValues["lang"]?.ToString();
+    string h1 = "";
+}
+
+@if (language == "en")
+{
+    h1 = "Inglés";
+}
+else if (language == "es")
+{
+    h1 = "Español";
+}
+else
+{
+    <p>Idioma no reconocido.</p>
+}
+
+
+<div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light w-100">
+    <div class="col-md-5 p-lg-5 mx-auto my-5">
+        <h1 class="display-4 font-weight-normal">Chiste en @h1</h1>
+        <p class="lead font-weight-normal">@Model.joke</p>
+        <div class="tenor-gif-embed" data-postid="3301365324423018790" data-share-method="host"
+            data-aspect-ratio="1.10667" data-width="100%"><a
+                href="https://tenor.com/view/minhoca-russa-baynard-russian-worm-gif-3301365324423018790">Minhoca Russa
+                GIF</a>from <a href="https://tenor.com/search/minhoca-gifs">Minhoca GIFs</a></div>
+        <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
+    </div>
+</div>
