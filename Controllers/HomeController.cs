@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using Menus.Models;
 using System.Text.Json;
 using menus.Models;
+using menus.Services;
+using AspNetCoreGeneratedDocument;
 
 namespace Menus.Controllers;
 
@@ -71,11 +73,13 @@ public class HomeController : Controller
         return View(joke);
     }
 
+    private readonly IAuthService authService;
     private readonly HttpClient httpClient;
 
     public HomeController(HttpClient httpClient)
     {
         this.httpClient = new HttpClient();
+        this.authService = new SimpleAuthService();
     }
 
     public IActionResult Index()
@@ -94,6 +98,36 @@ public class HomeController : Controller
     }
     public IActionResult Contact()
     {
+        return View();
+    }
+
+    [HttpGet]
+    public ActionResult Login()
+    {
+        return View();
+    }
+    [HttpPost]
+    public ActionResult Login(User user)
+    {
+        if (authService.Authenticate(user.Username, user.Password))
+        {
+            HttpContext.Session.SetString("UserAuthenticated", "true");
+            return RedirectToAction("Welcome");
+        }
+        else
+        {
+            ViewBag.Error = "Usuario o contraseña incorrectos";
+            return View();
+        }
+    }
+
+    public IActionResult Welcome()
+    {
+        var isAuthenticated = HttpContext.Session.GetString("UserAuthenticated");
+        if (isAuthenticated != "true")
+        {
+            return RedirectToAction("Index");
+        }
         return View();
     }
 
