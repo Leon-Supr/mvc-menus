@@ -58,17 +58,44 @@
                             }
                         </li>
                         <li class="nav-item"></li>
-                            @if (ViewData["Title"] == "Privacy")
-                            {
-                                <b><a class="nav-link text-dark" asp-area="" asp-controller="Home"
-                                        asp-action="Privacy">Privacy</a></b>
-                            }
-                            else
-                            {
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home"
-                                    asp-action="Privacy">Privacy</a>
-                            }
+                        @if (ViewData["Title"] == "Privacy")
+                        {
+                            <b><a class="nav-link text-dark" asp-area="" asp-controller="Home"
+                                    asp-action="Privacy">Privacy</a></b>
+                        }
+                        else
+                        {
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        }
                         </li>
+                        <li class="nav-item"></li>
+                        @if (ViewData["Title"] == "GetJoke")
+                        {
+                            <b><a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="GetJoke"
+                                    asp-route-lang="es">Get Joke</a></b>
+                        }
+                        else
+                        {
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="GetJoke"
+                                asp-route-lang="es">Get Joke</a>
+                        }
+                        </li>
+
+                        @{
+                            var isAuthenticated = Context.Session.GetString("UserAuthenticated") == "true";
+                        }
+                        @if (isAuthenticated)
+                        {
+                            <form asp-action="LogOut" asp-controller="Home" method="post" class="d-inline">
+                                <button type="submit" class="btn btn-secondary">Cerrar sesión</button>
+                            </form>
+                        }
+                        else
+                        {
+                            <a asp-action="Login" asp-controller="Home" class="btn btn-primary">Iniciar sesión</a>
+                        }
+                        </li>
+
                     </ul>
                 </div>
             </div>
@@ -82,7 +109,8 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; Franco and Co. Jeans and licuados - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; Franco and Co. Jeans and licuados - <a asp-area="" asp-controller="Home"
+                asp-action="Privacy">Privacy</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

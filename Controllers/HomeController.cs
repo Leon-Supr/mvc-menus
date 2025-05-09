@@ -53,14 +53,20 @@ public class HomeController : Controller
     [HttpGet("Home/GetJoke/{lang}")]
     public async Task<IActionResult> GetJoke(string lang)
     {
-        String url = $"https://v2.jokeapi.dev/joke/Programming?lang={lang}&type=single";
-        HttpResponseMessage response =
-             await httpClient.GetAsync(url);
+        var isAuthenticated = HttpContext.Session.GetString("UserAuthenticated");
+        if (isAuthenticated != "true")
+        {
+            return RedirectToAction("Login");
+        }
+
+        string url = $"https://v2.jokeapi.dev/joke/Programming?lang={lang}&type=single";
+        HttpResponseMessage response = await httpClient.GetAsync(url);
+
         if (!response.IsSuccessStatusCode)
         {
             return NotFound();
         }
-        String json = await response
+        string json = await response
                            .Content
                            .ReadAsStringAsync();
         JsonDocument doc = JsonDocument
@@ -119,6 +125,13 @@ public class HomeController : Controller
             ViewBag.Error = "Usuario o contraseña incorrectos";
             return View();
         }
+    }
+
+    [HttpPost]
+    public ActionResult LogOut(User user)
+    {
+            HttpContext.Session.Clear();
+            return RedirectToAction("Index");
     }
 
     public IActionResult Welcome()
